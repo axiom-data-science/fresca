@@ -1,5 +1,5 @@
 # FRESCA data management scripts
-A collection of related R scripts used for data wrangling as part of the data managmeent effort for the FRESCA program.
+A collection of related R scripts used for data wrangling as part of the data management effort for the FRESCA program.
 
 R scripts were written in RStudio, version 2024.12.1+563 "Kousa Dogwood" Release (27771613951643d8987af2b2fb0c752081a3a853, 2025-02-02) for Ubuntu Jammy
 Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) rstudio/2024.12.1+563 Chrome/126.0.6478.234 Electron/31.7.7 Safari/537.36, Quarto 1.6.43 (/opt/quarto/bin/quarto)
