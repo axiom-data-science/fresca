@@ -4,6 +4,20 @@ pacman::p_load(readr, tidyr, lubridate, dplyr, stringr)
 sfer_full <- read_csv("proj_data/m1/1.1/SFER_data.csv")
 
 
+#switch longitude values from positive west lon to negative east long
+sfer_full$new_lon_dec <- sfer_full$lon_dec*-1
+
+## make a map to verify that this looks right
+# mapview takes a long time to install - minutes!. 
+# Only uncomment this if you want see the plotted stations
+# install.packages("mapview")
+#
+# library(mapview)
+# mapview(sfer_full, xcol = "new_lon_dec", ycol = "lat_dec", crs = 4326, grid = FALSE)
+#
+# looks good, so ...
+# sfer_full$lon_dec <- sfer_full$new_lon_dec
+
 #create station table, write out to csv
 station_table <- sfer_full %>%
   select("cruise_id", "station", "lat_dec", "lon_dec", "station_type") %>% 
@@ -13,7 +27,7 @@ write_csv(station_table, "data_out/sfer_station.csv")
 
 # drop columns that are all NA
 sfer <- Filter(function(x)!all(is.na(x)), sfer_full)
-names(sfer)
+# names(sfer)
 
 
 #### create daily T/F subset for all_ctd data frame
@@ -28,7 +42,7 @@ to_drop <- c("keyfield", "year", "month", "day", "time", "lat_deg", "lat_min",
              "depth_order", "cast", "datetime")
 sfer <- sfer %>% select(-all_of(to_drop))
 
-names(sfer)
+# names(sfer)
 
 # create counts table
 h <- sfer %>% 
@@ -61,13 +75,13 @@ h$date <- str_split(h$new_key, "_", simplify = TRUE)[,1]
 h$cruise_id <- str_split(h$new_key, "_", simplify = TRUE)[,2]
 h$station <- str_split(h$new_key, "_", simplify = TRUE)[,3]
 h <- relocate(h, date, cruise_id, station, .after = new_key)
-names(h)
+# names(h)
 
-h %>% filter(event_n > 1)
+# h %>% filter(event_n > 1)
 
 write_csv(h, "data_out/sfer_counts.csv")
 
-names(h)
+# names(h)
 skip_these <- c("new_key", "cruise_id", "station", "event_n", "latitude", "longitude", "date")
 other_cols <- setdiff(names(h), skip_these)
 
@@ -75,6 +89,6 @@ j <- h %>%
   select(-event_n) %>%
   mutate(across(all_of(other_cols), ~ ifelse(.x > 0, TRUE, FALSE)))
 
-sample_n(j, 20)
+# sample_n(j, 20)
 
 write_csv(j, "data_out/sfer_logical.csv")  
