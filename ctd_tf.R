@@ -132,7 +132,7 @@ h$cruise_id <- str_split(h$key, "_", simplify = TRUE)[,2]
 h$station <- str_split(h$key, "_", simplify = TRUE)[,3]
 h <- relocate(h, date, cruise_id, station, .after = key)
 
-write_csv(h, "all_ctd_counts.csv")
+write_csv(h, "data_out/all_ctd_counts.csv")
 names(h)
 skip_these <- c("key", "cruise_id", "station", "event_n", "latitude", "longitude", "date")
 other_cols <- setdiff(names(h), skip_these)
@@ -141,7 +141,7 @@ j <- h %>%
   select(-event_n) %>%
   mutate(across(all_of(other_cols), ~ ifelse(.x > 0, TRUE, FALSE)))
 
-write_csv(j, "all_ctd_logical.csv")  
+write_csv(j, "data_out/all_ctd_logical.csv")  
 
 
 # create a list of all stations and accompanying lat/lon values
@@ -149,7 +149,7 @@ stations <- all_ctd %>%
   select(cruise_id, station, latitude, longitude) %>%
   distinct() %>%
   arrange(station)
-write_csv(stations, "all_ctd_stations.csv")
+write_csv(stations, "data_out/all_ctd_stations.csv")
 
 
 

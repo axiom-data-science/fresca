@@ -9,7 +9,7 @@ station_table <- sfer_full %>%
   select("cruise_id", "station", "lat_dec", "lon_dec", "station_type") %>% 
   unique() %>%
   arrange(station)
-write_csv(station_table, "sfer_station.csv")
+write_csv(station_table, "data_out/sfer_station.csv")
 
 # drop columns that are all NA
 sfer <- Filter(function(x)!all(is.na(x)), sfer_full)
@@ -65,7 +65,7 @@ names(h)
 
 h %>% filter(event_n > 1)
 
-write_csv(h, "sfer_counts.csv")
+write_csv(h, "data_out/sfer_counts.csv")
 
 names(h)
 skip_these <- c("new_key", "cruise_id", "station", "event_n", "latitude", "longitude", "date")
@@ -77,4 +77,4 @@ j <- h %>%
 
 sample_n(j, 20)
 
-write_csv(j, "sfer_logical.csv")  
+write_csv(j, "data_out/sfer_logical.csv")  
